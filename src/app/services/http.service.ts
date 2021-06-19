@@ -25,4 +25,8 @@ export class HttpService {
       params: params
     })
   }
+
+  getGames(){
+    return this.http.get("https://api.rawg.io/api/games?key=c04acbc995ea42309a3f8de7610333a1");
+  }
 }

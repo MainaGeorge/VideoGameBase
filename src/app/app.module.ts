@@ -14,7 +14,7 @@ import {MatSelectModule} from "@angular/material/select";
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { HomeComponent } from './components/home/home.component';
 import {HttpErrorInterceptor} from "./interceptors/error-interceptor.service";
-import {HttpHeadersInterceptor} from "./interceptors/http-headers.interceptor";
+import {HttpHeadersInterceptor} from "./interceptors/headers-interceptor.service";
 
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ import {HttpHeadersInterceptor} from "./interceptors/http-headers.interceptor";
     MatFormFieldModule,
     MatSelectModule
   ],
-  providers: [HttpErrorInterceptor, HttpHeadersInterceptor],
+  providers: [HttpHeadersInterceptor, HttpErrorInterceptor],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

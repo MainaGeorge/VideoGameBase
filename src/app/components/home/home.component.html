@@ -16,15 +16,24 @@
 </div>
 
 <div class="games">
-  <div class="game">
+  <ng-container *ngFor="let game of games">
+  <div class="game" >
     <div class="game-thumb-container">
-      <img src="https://images.freeimages.com/images/large-previews/13f/natal-sofia-4-1431300.jpg" alt="thumbnail" class="game-thumbnail">
+      <img *ngIf="game.background_image"
+        [src]="game.background_image"
+        alt="thumbnail"
+        class="game-thumbnail">
+      <p *ngIf="!game.background_image">No image</p>
     </div>
     <div class="game-description">
-      <p class="game-name">Name</p>
+      <p class="game-name">{{ game.name }}</p>
       <div class="game-platforms">
-        <img src="https://images.freeimages.com/images/large-previews/9c3/sunshine-1408040.jpg" alt="" class="game-platform" alt="slug">
+        <img *ngFor="let gamePlatform of game.parent_platforms"
+             src="assets/images/platforms/{{gamePlatform.platform.slug}}.svg"
+             alt="{{ gamePlatform.platform.slug }}"
+             class="game-platform">
       </div>
     </div>
   </div>
+  </ng-container>
 </div>
