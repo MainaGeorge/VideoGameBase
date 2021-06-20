@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {forkJoin, Observable} from "rxjs";
 import {environment as env} from "../../environments/environment.prod";
 import {APIResponse, Game} from "../Models/Interfaces/interfaces";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,23 @@ export class HttpService {
     return this.http.get<APIResponse<Game>>(`${env.BASE_URL}/games`, {
       params: params
     })
+  }
+
+  getGameDetails(id: string){
+    const gameInfoRequest = this.http.get(`${env.BASE_URL}/games/${id}`);
+    const gameTrailersRequest = this.http.get(`${env.BASE_URL}/games/${id}/movies`);
+    const gameScreenShots = this.http.get(`${env.BASE_URL}/games/${id}/screenshots`);
+
+    return forkJoin({
+        gameInfoRequest,
+      gameTrailersRequest,
+      gameScreenShots
+    }).pipe(map((resp: any) => {
+        return {...resp['gameInfoRequest'],
+          screenshots: resp['gameScreenShots']?.results,
+          trailers: resp['gameTrailersRequest']?.results
+        }
+    }))
   }
 
   getGames(){
